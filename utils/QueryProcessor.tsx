@@ -29,11 +29,23 @@ export default function QueryProcessor(query: string): string {
     return "";
   }
 
-  if (query.toLowerCase().includes("largest")) {
-    let numberMatch: RegExpMatchArray | null = query.match(/\d+/g); // Match all numbers individually
+  if (query.toLowerCase().includes("square") && query.toLowerCase().includes("cube")) {
+    let numberMatch: RegExpMatchArray | null = query.match(/\d+/g); // Extract numbers
     if (numberMatch) {
         let numbers = numberMatch.map(Number); // Convert strings to numbers
-        return String(Math.max(...numbers)); // Find and return the largest number
+        let sixthPowers = numbers.filter(n => {
+            let root = Math.round(n ** (1 / 6));
+            return root ** 6 === n; // Check if n is a perfect sixth power
+        });
+
+        return sixthPowers.length > 0 ? sixthPowers.join(", ") : "None";
+    }
+  }
+
+  if (query.toLowerCase().includes("multiplied by")) {
+    let numberMatch: RegExpMatchArray | null = query.match(/(\d+)\s*multiplied by\s*(\d+)/);
+    if (numberMatch) {
+        return String(Number(numberMatch[1]) * Number(numberMatch[2]));
     }
   }
   
