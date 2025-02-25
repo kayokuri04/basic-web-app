@@ -28,5 +28,14 @@ export default function QueryProcessor(query: string): string {
     }
     return "";
   }
+
+  if (query.toLowerCase().includes("largest")) {
+    let numberMatch: RegExpMatchArray | null = query.match(/\d+/g); // Match all numbers individually
+    if (numberMatch) {
+        let numbers = numberMatch.map(Number); // Convert strings to numbers
+        return String(Math.max(...numbers)); // Find and return the largest number
+    }
+  }
+  
   return "";
 }
