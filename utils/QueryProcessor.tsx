@@ -76,6 +76,21 @@ export default function QueryProcessor(query: string): string {
           return primes.length > 0 ? primes.join(", ") : "None";
       }
   }
+
+  if (query.toLowerCase().includes("to the power of")) {
+    let numberMatch: RegExpMatchArray | null = query.match(/(\d+)\s*to the power of\s*(\d+)/);
+    if (numberMatch) {
+        return String(Number(numberMatch[1]) ** Number(numberMatch[2])); // Handle large numbers
+    }
+  }
+
+  if (query.toLowerCase().includes("plus")) {
+    let numberMatch: RegExpMatchArray | null = query.match(/\d+/g); // Extract all numbers
+    if (numberMatch) {
+        let sum = numberMatch.map(Number).reduce((acc, num) => acc + num, 0); // Sum all numbers
+        return String(sum);
+    }
+  }
   
   return "";
 }
