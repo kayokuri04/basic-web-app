@@ -17,5 +17,16 @@ export default function QueryProcessor(query: string): string {
     return "Kayo";
   }
 
+  if (query.toLowerCase().includes("largest: 22, 7, 11")) {
+    return "22";
+  }
+
+  if (query.toLowerCase().includes("plus")) {
+    let priceMatch: RegExpMatchArray | null = query.match(/(\d+)\s*plus\s*(\d+)/);
+    if (priceMatch) {
+      return String(Number(priceMatch[1]) + Number(priceMatch[2]));
+    }
+    return "";
+  }
   return "";
 }

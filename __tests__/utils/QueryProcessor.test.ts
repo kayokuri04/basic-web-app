@@ -33,4 +33,12 @@ describe("QueryProcessor", () => {
             "Kayo"
           ));
     })
+
+    test('should add two numbers', () => {
+        const query = "What is 10 plus 20?";
+        const response: string = QueryProcessor(query);
+        expect(response).toBe((
+            "30"
+          ));
+    })
 });
