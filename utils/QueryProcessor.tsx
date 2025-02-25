@@ -58,7 +58,24 @@ export default function QueryProcessor(query: string): string {
     if (numberMatch) {
         return String(Number(numberMatch[1]) - Number(numberMatch[2]));
     }
-}
+  }
+
+  function isPrime(n: number): boolean {
+    if (n < 2) return false;
+    for (let i = 2; i * i <= n; i++) {
+        if (n % i === 0) return false;
+    }
+    return true;
+  }
+
+  if (query.toLowerCase().includes("prime")) {
+      let numberMatch: RegExpMatchArray | null = query.match(/\d+/g); // Extract all numbers
+      if (numberMatch) {
+          let numbers = numberMatch.map(Number); // Convert to numbers
+          let primes = numbers.filter(isPrime); // Filter prime numbers
+          return primes.length > 0 ? primes.join(", ") : "None";
+      }
+  }
   
   return "";
 }
