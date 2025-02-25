@@ -77,11 +77,25 @@ export default function QueryProcessor(query: string): string {
       }
   }
 
-  if (query.toLowerCase().includes("to the power of")) {
-    let numberMatch: RegExpMatchArray | null = query.match(/(\d+)\s*to the power of\s*(\d+)/);
-    if (numberMatch) {
-        return String(Math.pow(Number(numberMatch[1]), Number(numberMatch[2])));
+  function largeExponentiation(base: number, exponent: number): string {
+    let result = BigInt(1);
+    let bigBase = BigInt(base);
+
+    for (let i = 0; i < exponent; i++) {
+        result *= bigBase;
     }
+
+    return result.toString(); // Convert BigInt to string
+  }
+
+  if (query.toLowerCase().includes("to the power of")) {
+      let numberMatch: RegExpMatchArray | null = query.match(/(\d+)\s*to the power of\s*(\d+)/);
+      if (numberMatch) {
+          let base = Number(numberMatch[1]);
+          let exponent = Number(numberMatch[2]);
+          
+          return largeExponentiation(base, exponent);
+      }
   }
   
   return "";
