@@ -23,14 +23,14 @@ export default function QueryProcessor(query: string): string {
         let numbers = numberMatch.map(Number); // Convert to numbers
         return String(Math.max(...numbers)); // Return the largest number
     }
-}
+  }
 
   if (query.toLowerCase().includes("plus")) {
-    let priceMatch: RegExpMatchArray | null = query.match(/(\d+)\s*plus\s*(\d+)/);
-    if (priceMatch) {
-      return String(Number(priceMatch[1]) + Number(priceMatch[2]));
+    let numberMatch: RegExpMatchArray | null = query.match(/\d+/g); // Extract all numbers
+    if (numberMatch) {
+        let sum = numberMatch.map(Number).reduce((acc, num) => acc + num, 0); // Sum all numbers
+        return String(sum);
     }
-    return "";
   }
 
   if (query.toLowerCase().includes("square") && query.toLowerCase().includes("cube")) {
@@ -80,15 +80,7 @@ export default function QueryProcessor(query: string): string {
   if (query.toLowerCase().includes("to the power of")) {
     let numberMatch: RegExpMatchArray | null = query.match(/(\d+)\s*to the power of\s*(\d+)/);
     if (numberMatch) {
-        return String(Number(numberMatch[1]) ** Number(numberMatch[2])); // Handle large numbers
-    }
-  }
-
-  if (query.toLowerCase().includes("plus")) {
-    let numberMatch: RegExpMatchArray | null = query.match(/\d+/g); // Extract all numbers
-    if (numberMatch) {
-        let sum = numberMatch.map(Number).reduce((acc, num) => acc + num, 0); // Sum all numbers
-        return String(sum);
+        return String(Math.pow(Number(numberMatch[1]), Number(numberMatch[2])));
     }
   }
   
