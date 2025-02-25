@@ -52,6 +52,13 @@ export default function QueryProcessor(query: string): string {
         return String(Number(numberMatch[1]) * Number(numberMatch[2]));
     }
   }
+
+  if (query.toLowerCase().includes("minus")) {
+    let numberMatch: RegExpMatchArray | null = query.match(/(\d+)\s*minus\s*(\d+)/);
+    if (numberMatch) {
+        return String(Number(numberMatch[1]) - Number(numberMatch[2]));
+    }
+}
   
   return "";
 }
